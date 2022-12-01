@@ -26,6 +26,7 @@ public class Board : MonoBehaviour
     public int width;
     public int height;
     public int offSet;
+    private HintManager hintManager;
     public GameObject tilePrefab;
     public GameObject breakableTilePrefab;
     public GameObject[] dots;
@@ -94,6 +95,9 @@ public class Board : MonoBehaviour
                         }
                     }
                 }
+                if (IsDeadlocked()){
+                        ShuffleBoard();
+                    }
         }
 
     private bool MatchesAt(int column, int row, GameObject piece){
@@ -151,7 +155,6 @@ public class Board : MonoBehaviour
         }
         if(findMatches.currentMatches.Count == 5 || findMatches.currentMatches.Count == 8){
             if(ColumnOrRow()){
-                //fazer a bomba arco-iris
                 if(currentDot != null){
                     if(currentDot.isMatched){
                         if(currentDot.isColorBomb){
@@ -214,6 +217,9 @@ public class Board : MonoBehaviour
     }
 
     public void DestroyMatches(){
+        if (hintManager != null){
+            hintManager.DestroyHint();
+        }
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
                 if(allDots[i, j] != null){
@@ -228,15 +234,11 @@ public class Board : MonoBehaviour
     private IEnumerator DecreaseRowCo2(){
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
-                //se o atual spot n]ao estiver vazio ou livre
                 if(!blankSpaces[i, j] && allDots[i, j] == null){
                     for(int k = j  + 1; k < height; k++){
                         if(allDots[i, k] != null){
-                            //move essa peça para o espaço vazio
                             allDots[i, k].GetComponent<Dot>().row = j;
-                            //seta este espaço para ser nulo
                             allDots[i, k] = null;
-                            //quebra o loop
                             break;
                         }
                     }
@@ -335,7 +337,7 @@ public class Board : MonoBehaviour
                             if(allDots[i + 1, j].tag == allDots[i, j].tag
                                 && allDots[i + 2, j].tag == allDots[i, j].tag){
                                     return true;
-                                } 
+                            } 
                         }
                     }
                     if(j < height - 2){
@@ -363,18 +365,28 @@ public class Board : MonoBehaviour
     }
 
     private bool IsDeadlocked(){
+        if(hintManager != null){
+            hintManager.DestroyHint();
+        }    
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
                 if(allDots[i, j] != null){
                     if(i < width - 1){
-                        if(SwitchAndCheck(i, j, Vector2.right)){
-                            return false;
-                        }
+                        if(allDots[i + 1, j] != null){
+                            if(SwitchAndCheck(i, j, Vector2.right)){
+                                return false;
+                            }
+                        }    
                     }
                     if(j < height - 1){
-                        if(SwitchAndCheck(i, j, Vector2.up)){
-                            return false;
-                        }
+                        if(allDots[i, j + 1] != null){
+                            if(SwitchAndCheck(i, j, Vector2.up)){
+                                return false;
+                            }
+                        }    
+                    }
+                    if(allDots[i, j].GetComponent<Dot>().isColorBomb){
+                        return false;
                     }
                 }
             }

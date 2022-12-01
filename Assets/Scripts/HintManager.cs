@@ -29,15 +29,19 @@ public class HintManager : MonoBehaviour
             for(int j = 0; j < board.height; j++){
                 if(board.allDots[i, j] != null){
                     if(i < board.width - 1){
-                        if(board.SwitchAndCheck(i, j, Vector2.right)){
-                            possibleMoves.Add(board.allDots[i, j]);
+                        if(board.allDots[i + 1, j] != null){
+                            if(board.SwitchAndCheck(i, j, Vector2.right)){
+                                possibleMoves.Add(board.allDots[i, j]);
+                            }
                         }
                     }
-                    if(j < board.height - 1){
-                        if(board.SwitchAndCheck(i, j, Vector2.up)){
-                            possibleMoves.Add(board.allDots[i, j]);
+                    if(j < board.height -1){    
+                        if(j < board.height - 1){
+                            if(board.SwitchAndCheck(i, j, Vector2.up)){
+                                possibleMoves.Add(board.allDots[i, j]);
+                            }
                         }
-                    }
+                    }    
                 }
             }
         }
