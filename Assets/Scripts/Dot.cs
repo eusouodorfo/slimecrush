@@ -13,7 +13,6 @@ public class Dot : MonoBehaviour
     public int targetY;
     public bool isMatched = false;
 
-    //private HintManager hintManager;
     private FindMatches findMatches;
     private Board board;
     public GameObject otherDot;
@@ -43,7 +42,6 @@ public class Dot : MonoBehaviour
         isColorBomb = false;
         isAdjacentBomb = false;
 
-        //hintManager = FindObjectOfType<HintManager>();
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
     }
@@ -111,9 +109,6 @@ public class Dot : MonoBehaviour
     }
 
     private void OnMouseDown(){
-         //if(hintManager != null){
-            //hintManager.DestroyHint();
-        //}
         if(board.currentState == GameState.move){
             firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }    
@@ -156,7 +151,6 @@ public class Dot : MonoBehaviour
     void MovePieces(){
         if(swipeAngle > -45 && swipeAngle <= 45 && column < board.width - 1){
             MovePiecesActual(Vector2.right);
-
         } else if(swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1){
             MovePiecesActual(Vector2.up);
         } else if((swipeAngle > 135 || swipeAngle <= -135) && column > 0){

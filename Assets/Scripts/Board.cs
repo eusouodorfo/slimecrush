@@ -321,14 +321,14 @@ public class Board : MonoBehaviour
     }
 
     private void SwitchPieces(int column, int row, Vector2 direction){
-        GameObject holder = allDots[column, row] as GameObject;
+        GameObject holder = allDots[column + (int)direction.x, row + (int)direction.y] as GameObject;
         allDots[column + (int)direction.x, row + (int)direction.y] = allDots[column, row];
         allDots[column, row] = holder;
     }
 
     private bool CheckForMatches(){
         for(int i = 0; i < width; i++){
-            for(int j = 0; j <height; j++){
+            for(int j = 0; j < height; j++){
                 if(allDots[i, j] != null){
                     if(i < width - 2){
                         if(allDots[i + 1, j] != null && allDots[i + 2, j] != null){
@@ -343,7 +343,7 @@ public class Board : MonoBehaviour
                             if(allDots[i, j + 1].tag == allDots[i, j].tag
                                 && allDots[i, j + 2].tag == allDots[i, j].tag){
                                     return true;
-                                }
+                            }
                         }
                     }
                 }
@@ -352,7 +352,7 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    public bool SwitchAndCheck(int column, int row, Vector2 direction){
+    private bool SwitchAndCheck(int column, int row, Vector2 direction){
         SwitchPieces(column, row, direction);
         if(CheckForMatches()){
             SwitchPieces(column, row, direction);

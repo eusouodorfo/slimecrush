@@ -156,7 +156,7 @@ MonoBehaviour:
   currentState: 1
   width: 5
   height: 5
-  offSet: 20
+  offSet: 10
   tilePrefab: {fileID: 1401062494616520700, guid: 6bdbf1cbfe85f83449f448c0adb461bf, type: 3}
   breakableTilePrefab: {fileID: 4745213154197560788, guid: 6ba7ce7fe70a31b4a92df52b2bfce06e, type: 3}
   dots:

@@ -81,8 +81,7 @@ public class FindMatches : MonoBehaviour{
         yield return new WaitForSeconds(.2f);
         for(int i = 0; i < board.width; i++){
             for(int j = 0; j < board.height; j++){
-                GameObject currentDot = board.allDots[i, j];
-                
+                GameObject currentDot = board.allDots[i, j];                
                 if(currentDot != null){
                     Dot currentDotDot = currentDot.GetComponent<Dot>();
                     if(i > 0 && i < board.width - 1){

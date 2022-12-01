@@ -16,14 +16,14 @@ public class HintManager : MonoBehaviour
     }
 
     void Update(){
-        hintDelaySeconds -= Time.deltaTime;
-        if(hintDelaySeconds <= 0 && currentHint == null){
-            MarkHint();
-            hintDelaySeconds = hintDelay;
-        }
+        //hintDelaySeconds -= Time.deltaTime;
+        //if(hintDelaySeconds <= 0 && currentHint == null){
+         //   MarkHint();
+        //    hintDelaySeconds = hintDelay;
+       // }
     }
 
-    List<GameObject> FindAllMatches(){
+    /*List<GameObject> FindAllMatches(){
         List<GameObject> possibleMoves = new List<GameObject>();
          for(int i = 0; i < board.width; i++){
             for(int j = 0; j < board.height; j++){
@@ -42,9 +42,9 @@ public class HintManager : MonoBehaviour
             }
         }
         return possibleMoves;
-    }
+    }*/
 
-    GameObject PickOneRandomly(){
+    /*GameObject PickOneRandomly(){
         List<GameObject> possibleMoves = new List<GameObject>();
         possibleMoves = FindAllMatches();
         if(possibleMoves.Count > 0){
@@ -52,20 +52,20 @@ public class HintManager : MonoBehaviour
             return possibleMoves[pieceToUse];
         }
         return null;
-    }
+    }*/
 
-    private void MarkHint(){
+    /*private void MarkHint(){
         GameObject move = PickOneRandomly();
         if(move != null){
             currentHint = Instantiate(hintParticle, move.transform.position, Quaternion.identity);
         }
-    }
+    }*/
 
-    public void DestroyHint(){
+    /*public void DestroyHint(){
         if(currentHint != null){
             Destroy(currentHint);
             currentHint = null;
             hintDelaySeconds = hintDelay;
         }
-    }
+    }*/
 }
