@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1752704672203376136}
   - component: {fileID: 1632431033397184453}
   - component: {fileID: 8906717133092675536}
+  - component: {fileID: 3845991552449748795}
   m_Layer: 0
   m_Name: Orange Dot
   m_TagString: OrangeDot
@@ -132,3 +133,23 @@ MonoBehaviour:
   rowArrow: {fileID: 1207702976778309225, guid: b473b6a82ef8b14479c749507a15482d, type: 3}
   columnArrow: {fileID: 4900727313095306580, guid: 9135a12a71aa47a4f924a2b9900e1dc3, type: 3}
   colorBomb: {fileID: 5808808576214085431, guid: 1aab405222804b04e948a78a7a342490, type: 3}
+--- !u!95 &3845991552449748795
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687121050940212021}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4aea717a6732f4a4b879327c776167c6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
