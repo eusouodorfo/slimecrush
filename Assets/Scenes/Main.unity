@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb358293258b0d4dba5f641b5af151f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hintDelay: 3
+  hintDelay: 15
   hintParticle: {fileID: 1572173588621029262, guid: fcb60b7b8ebb79d46b2185c12f521052, type: 3}
   currentHint: {fileID: 0}
 --- !u!1 &519206304
@@ -579,7 +579,7 @@ MonoBehaviour:
   cameraOffset: -10
   aspectRatio: 0.5625
   padding: 2
-  yOffset: 1
+  yOffset: 0.5
 --- !u!1 &1421965942
 GameObject:
   m_ObjectHideFlags: 0
