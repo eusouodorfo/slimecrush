@@ -40,6 +40,7 @@ public class Board : MonoBehaviour
     public int basePieceValue = 20;
     private int streakValue = 1;
     private ScoreManager scoreManager;
+    public float refillDelay = 0.5f;
     
 
     void Start() {
@@ -251,11 +252,11 @@ public class Board : MonoBehaviour
                 }
             }
         }
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(refillDelay * 0.5f);
         StartCoroutine(FillBoardCo());
     }
 
-    private IEnumerator DecreaseRowCO(){
+    private IEnumerator DecreaseRowCo(){
         int nullCount = 0;
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
@@ -268,7 +269,7 @@ public class Board : MonoBehaviour
             }
             nullCount = 0;
         }
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(refillDelay * 0.5f);
         StartCoroutine(FillBoardCo()); 
     }
 
@@ -310,22 +311,22 @@ public class Board : MonoBehaviour
 
     private IEnumerator FillBoardCo(){
         RefillBoard();
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(refillDelay);
 
         while(MatchesOnBoard()){
             streakValue++;
-            yield return new WaitForSeconds(.5f);
             DestroyMatches();
+            yield return new WaitForSeconds(2 * refillDelay);    
         }
         findMatches.currentMatches.Clear();
         currentDot = null;
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(refillDelay);
 
         if(IsDeadlocked()){
             ShuffleBoard();
             Debug.Log("DeadLocked!!");
         }
-
+        
         currentState = GameState.move;
         streakValue = 1;
     }
@@ -403,6 +404,8 @@ public class Board : MonoBehaviour
     }
 
     private void ShuffleBoard(){
+        //aqui tbm
+    
     List<GameObject> newBoard = new List<GameObject>();   
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
@@ -411,6 +414,8 @@ public class Board : MonoBehaviour
                 }
             }
         }
+        //aqui
+        
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
                 if(!blankSpaces[i, j]){

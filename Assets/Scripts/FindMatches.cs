@@ -147,8 +147,10 @@ public class FindMatches : MonoBehaviour{
                 for(int j = row - 1; j <= row + 1; j++){
                     //checar se a peça esta dentro da board
                     if (i >= 0 && i < board.width && j >= 0 && j < board.height){
-                        dots.Add(board.allDots[i, j]);
-                        board.allDots[i, j].GetComponent<Dot>().isMatched = true;
+                        if(board.allDots[i, j] != null){
+                            dots.Add(board.allDots[i, j]);
+                            board.allDots[i, j].GetComponent<Dot>().isMatched = true;
+                        }
                     }
                 }
             }
