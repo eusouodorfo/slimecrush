@@ -217,6 +217,12 @@ public class Board : MonoBehaviour
                 }
             }
 
+            /*
+            if(soundManager != null){
+                soundManager.PlayRandomDestroyNoise();
+            }
+            */
+
             GameObject particle = Instantiate(destroyEffect, allDots[column, row].transform.position, Quaternion.identity);
             Destroy(particle, .5f);
             Destroy(allDots[column, row]);
@@ -226,9 +232,6 @@ public class Board : MonoBehaviour
     }
 
     public void DestroyMatches(){
-        if (hintManager != null){
-            hintManager.DestroyHint();
-        }
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
                 if(allDots[i, j] != null){
@@ -322,13 +325,13 @@ public class Board : MonoBehaviour
         }
         findMatches.currentMatches.Clear();
         currentDot = null;
-        yield return new WaitForSeconds(refillDelay);
-
+    
         if(IsDeadlocked()){
-            ShuffleBoard();
+            StartCoroutine(ShuffleBoard());
             Debug.Log("DeadLocked!!");
         }
-        
+
+        yield return new WaitForSeconds(refillDelay);
         currentState = GameState.move;
         streakValue = 1;
     }
@@ -375,39 +378,28 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    private bool IsDeadlocked(){
-        if(hintManager != null){
-            hintManager.DestroyHint();
-        }    
+    private bool IsDeadlocked(){    
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
                 if(allDots[i, j] != null){
                     if(i < width - 1){
-                        if(allDots[i + 1, j] != null){
                             if(SwitchAndCheck(i, j, Vector2.right)){
                                 return false;
                             }
                         }    
-                    }
                     if(j < height - 1){
-                        if(allDots[i, j + 1] != null){
-                            if(SwitchAndCheck(i, j, Vector2.up)){
-                                return false;
-                            }
-                        }    
-                    }
-                    if(allDots[i, j].GetComponent<Dot>().isColorBomb){
-                        return false;
-                    }
+                        if(SwitchAndCheck(i, j, Vector2.up)){
+                            return false;
+                        }
+                    }    
                 }
             }
         }
         return true;
     }
 
-    private void ShuffleBoard(){
-        //aqui tbm
-    
+    private IEnumerator ShuffleBoard(){
+    yield return new WaitForSeconds(.5f);
     List<GameObject> newBoard = new List<GameObject>();   
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
@@ -416,8 +408,7 @@ public class Board : MonoBehaviour
                 }
             }
         }
-        //aqui
-        
+        yield return new WaitForSeconds(.5f);
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
                 if(!blankSpaces[i, j]){
@@ -428,10 +419,11 @@ public class Board : MonoBehaviour
                         while(MatchesAt(i, j, newBoard[pieceToUse]) && maxIterations < 100){
                             pieceToUse = Random.Range(0, newBoard.Count);
                             maxIterations++;
+                            Debug.Log(maxIterations);
                         }
-                        maxIterations = 0;
 
-                    Dot piece = newBoard[pieceToUse].GetComponent<Dot>();
+                    Dot piece = newBoard[pieceToUse].GetComponent<Dot>();    
+                    maxIterations = 0; 
                     piece.column = i;
                     piece.row = j;
                     allDots[i, j] = newBoard[pieceToUse];
@@ -440,7 +432,7 @@ public class Board : MonoBehaviour
             }
         }
         if(IsDeadlocked()){
-            ShuffleBoard();
+            StartCoroutine(ShuffleBoard());
         }
     }
 
