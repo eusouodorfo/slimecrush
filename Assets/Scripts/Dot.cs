@@ -180,7 +180,6 @@ public class Dot : MonoBehaviour
                 rightDot1.GetComponent<Dot>().isMatched = true;
                 isMatched = true;
                 }
-            
             }
         }
         if(row > 0 && row < board.height - 1){
@@ -192,8 +191,7 @@ public class Dot : MonoBehaviour
                 downDot1.GetComponent<Dot>().isMatched = true;
                 isMatched = true;
                 }
-            }
-            
+            }            
         }
     }
 

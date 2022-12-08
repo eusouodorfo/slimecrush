@@ -26,6 +26,7 @@ public class Board : MonoBehaviour
     public int width;
     public int height;
     public int offSet;
+    //dica
     private HintManager hintManager;
     public GameObject tilePrefab;
     public GameObject breakableTilePrefab;
@@ -40,10 +41,13 @@ public class Board : MonoBehaviour
     public int basePieceValue = 20;
     private int streakValue = 1;
     private ScoreManager scoreManager;
+    //private SoundManager soundmanager;
     public float refillDelay = 0.5f;
+    //public int[] scoreGoals;
     
 
     void Start() {
+        //soundManager = FindObjectOfType<SoundManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
         breakableTiles = new BackgroundTile[width, height];
         findMatches = FindObjectOfType<FindMatches>();
@@ -71,39 +75,37 @@ public class Board : MonoBehaviour
     }
 
     private void SetUp()  {
-            GenerateBlankSpaces();
-            GenerateBreakableTiles();
-            for (int i = 0; i < width; i++){
-                    for(int j = 0; j < height; j++){
-                        if(!blankSpaces[i, j]){
-                        Vector2 tempPosition = new Vector2(i, j + offSet);
-                        Vector2 tilePosition = new Vector2(i, j);
-                        GameObject backgroundTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as GameObject;
-                        backgroundTile.transform.parent = this.transform;
-                        backgroundTile.name = "( " + i + ", " + j + " )";
+        GenerateBlankSpaces();
+        GenerateBreakableTiles();
+        for (int i = 0; i < width; i++){
+                for(int j = 0; j < height; j++){
+                    if(!blankSpaces[i, j]){
+                    Vector2 tempPosition = new Vector2(i, j + offSet);
+                    Vector2 tilePosition = new Vector2(i, j);
+                    GameObject backgroundTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as GameObject;
+                    backgroundTile.transform.parent = this.transform;
+                    backgroundTile.name = "( " + i + ", " + j + " )";
 
-                        int dotToUse = Random.Range(0, dots.Length);
+                    int dotToUse = Random.Range(0, dots.Length);
 
-                        int maxIterations = 0;
+                    int maxIterations = 0;
 
-                        while(MatchesAt(i, j, dots[dotToUse]) && maxIterations < 100){
-                            dotToUse = Random.Range(0, dots.Length);
-                            maxIterations++;
-                        }
-                        maxIterations = 0;
+                    while(MatchesAt(i, j, dots[dotToUse]) && maxIterations < 100){
+                        dotToUse = Random.Range(0, dots.Length);
+                        maxIterations++;
+                        Debug.Log(maxIterations);
+                    }
+                    maxIterations = 0;
 
-                        GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
-                        dot.GetComponent<Dot>().row = j;
-                        dot.GetComponent<Dot>().column = i;
-                        dot.transform.parent = this.transform;
-                        dot.name = "( " + i + ", " + j + " )";
-                        allDots[i, j] = dot;
-                        }
+                    GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
+                    dot.GetComponent<Dot>().row = j;
+                    dot.GetComponent<Dot>().column = i;
+                    dot.transform.parent = this.transform;
+                    dot.name = "( " + i + ", " + j + " )";
+                    allDots[i, j] = dot;
                     }
                 }
-                if (IsDeadlocked()){
-                        ShuffleBoard();
-                    }
+            }              
         }
 
     private bool MatchesAt(int column, int row, GameObject piece){
@@ -163,7 +165,7 @@ public class Board : MonoBehaviour
             if(ColumnOrRow()){
                 if(currentDot != null){
                     if(currentDot.isMatched){
-                        if(currentDot.isColorBomb){
+                        if(!currentDot.isColorBomb){
                             currentDot.isMatched = false;
                             currentDot.MakeColorBomb();
                         }               
