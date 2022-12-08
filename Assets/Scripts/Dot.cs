@@ -51,9 +51,9 @@ public class Dot : MonoBehaviour
     //pra debug
     private void OnMouseOver(){
         if(Input.GetMouseButtonDown(1)){
-            isAdjacentBomb = true;
-            GameObject marker = Instantiate(adjacentMarker, transform.position, Quaternion.identity);
-            marker.transform.parent = this.transform;
+            isColorBomb = true;
+            GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
+            color.transform.parent = this.transform;
         }
     }
 
@@ -128,7 +128,8 @@ public class Dot : MonoBehaviour
     }
 
     void CalculateAngle(){
-        if(Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResist || Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResist){
+        if(Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResist || 
+            Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResist){
             board.currentState = GameState.wait;
             swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
             MovePieces();
