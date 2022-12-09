@@ -43,7 +43,7 @@ public class Board : MonoBehaviour
     private ScoreManager scoreManager;
     //private SoundManager soundmanager;
     public float refillDelay = 0.5f;
-    //public int[] scoreGoals;
+    public int[] scoreGoals;
     
 
     void Start() {
