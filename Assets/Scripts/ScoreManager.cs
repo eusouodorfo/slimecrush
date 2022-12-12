@@ -9,9 +9,18 @@ public class ScoreManager : MonoBehaviour{
     public Text scoreText;
     public int score;
     public Image scoreBar;
+    public ParticleSystem particleSys; //teste
+    public Slider slider; //teste
+
+    //teste
+    public void awake(){
+        slider = gameObject.GetComponent<Slider>(); 
+       // particleSys = GameObject.Find("ProgressParticle").GetComponent<ParticleSystem>();
+    }
 
     void Start(){
         board = FindObjectOfType<Board>();
+        slider = FindObjectOfType<Slider>();//teste
     }
 
     void Update(){
@@ -23,6 +32,12 @@ public class ScoreManager : MonoBehaviour{
         if(board != null && scoreBar != null){
             int length = board.scoreGoals.Length;
             scoreBar.fillAmount = (float)score / (float)board.scoreGoals[length - 1];
+            slider.value = (float)score / (float)board.scoreGoals[length - 1];//teste
+            if(!particleSys.isPlaying){
+                particleSys.Play();
+            }else{
+                particleSys.Stop();
+            }
         }
     }
    
