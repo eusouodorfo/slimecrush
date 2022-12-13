@@ -15,7 +15,7 @@ public class ScoreManager : MonoBehaviour{
     //teste
     public void awake(){
         slider = gameObject.GetComponent<Slider>(); 
-       // particleSys = GameObject.Find("ProgressParticle").GetComponent<ParticleSystem>();
+        //particleSys = gameObject.GetComponent<ParticleSystem>();
     }
 
     void Start(){
